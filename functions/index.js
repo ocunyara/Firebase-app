@@ -6,7 +6,7 @@ admin.initializeApp();
 const express = require('express');
 const app = express();
 
-app.get('/screams', (req, res) => {
+app.get('/scream', (req, res) => {
     admin
     .firestore()
     .collection('screams')
@@ -21,24 +21,20 @@ app.get('/screams', (req, res) => {
     .catch((err) => console.error(err))
 })
 
-exports.createScream = functions.https.onRequest((req, res) => {
+app.post('/scream', (req, res) => {
     const newScream = {
         body: req.body.body,
-        userHandle: req.body.userHandle,
-        createAt: admin.firestore.Timestamp.fromData(new Date())
+        userHandle: req.body.userHandle
     };
 
     admin
-        .firestore()
-        .collection('screams')
-        .add(newScream)
-        .then((doc) => {
-            res.json({ massage: `document ${doc.id} created successfull` })
+      .firestore()
+      .collection('screams')
+      .add(newScream)
+      .then((doc) => {
+          res.json({ massage: `document ${doc.id} created successfull` })
         })
-        .catch((err) => {
-            res.status(500).json({ error: `somesing went wrong` });
-            console.error(err)
-        })
+    .catch((err) => console.error(err))
 });
 
 exports.api = functions.https.onRequest(app);
