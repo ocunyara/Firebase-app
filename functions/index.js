@@ -24,7 +24,8 @@ app.get('/scream', (req, res) => {
 app.post('/scream', (req, res) => {
     const newScream = {
         body: req.body.body,
-        userHandle: req.body.userHandle
+        userHandle: req.body.userHandle,
+        createAt: admin.firestore.Timestamp.fromDate(new Date())
     };
 
     admin
