@@ -6,7 +6,7 @@ admin.initializeApp();
 const express = require('express');
 const app = express();
 
-app.get('/scream', (req, res) => {
+app.get('/screams', (req, res) => {
     admin
     .firestore()
     .collection('screams')
@@ -14,7 +14,12 @@ app.get('/scream', (req, res) => {
     .then(data => {
         let screams = [];
         data.forEach(doc => {
-            screams.push(doc.data());
+            screams.push({
+                screamId: doc.id,
+                body: doc.data().body,
+                userHandle: doc.data().userHandle,
+                createAt: doc.data().createAt
+            });
         });
         return res.json(screams);
     })
