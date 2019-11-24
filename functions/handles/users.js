@@ -5,7 +5,7 @@ const config = require('../util/config');
 const firebase = require('firebase');
 firebase.initializeApp(config);
 
-const { validateSignupData, validateLoginData } = require('../util/validators');
+const { validateSignupData, validateLoginData, reduceUserDetails } = require('../util/validators');
 
 
 // Sign users up
@@ -65,22 +65,21 @@ exports.signup = (req, res) => {
     });
 };
 
+
+// login function
 exports.login = (req, res) => {
   const user = {
     email: req.body.email,
     password: req.body.password
   };
 
-
   const { valid, errors } = validateLoginData(user);
 
-  if(!valid) return res.status(400).json(errors);
-
-  if(Object.keys(errors).length > 0) return res.status(400).json(errors);
+  if (!valid) return res.status(400).json(errors);
 
   firebase
     .auth()
-    .createUserWithEmailAndPassword(user.email, user.password)
+    .signInWithEmailAndPassword(user.email, user.password)
     .then((data) => {
       return data.user.getIdToken();
     })
@@ -89,16 +88,30 @@ exports.login = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      if (err.code === 'auth/wrong-password') {
-        return res.status(403).json({general: 'Wrong credentials, plase try again'});
-      } else {
-        return res
-          .status(500)
-          .json({ error: err.code});
-      }
+      // auth/wrong-password
+      // auth/user-not-user
+      return res
+        .status(403)
+        .json({ general: 'Wrong credentials, please try again' });
     });
 };
 
+// Add user details
+
+exports.addUserDetails = (req, res) => {
+  let userDetails = reduceUserDetails(req.body);
+
+  db.doc(`/users/${req.user.handle}`).update(userDetails)
+    .then(() => {
+      return res.json({ massage: 'Details added successfully' });
+    })
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({ error: err.code });
+    });
+}
+
+// Upload image a users
 exports.uploadImage = (req, res) => {
   const BusBoy = require('busboy');
   const path = require('path');
@@ -144,7 +157,7 @@ exports.uploadImage = (req, res) => {
         return res.status(500).json({ error: err.code });
       });
   });
-  busboy.end(req.rawBody)
+  busboy.end(req.rawBody);
 
 }
 
