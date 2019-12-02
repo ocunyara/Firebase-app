@@ -1,10 +1,10 @@
 let db = {
   users: [
     {
-      userId: 'dh23ggj5h32g543j5gf43',
-      email: 'user@email.com',
-      handle: 'user',
-      createdAt: '2019-03-15T10:59:52.798Z',
+      userId: 'E5mjsn8TmdgVRNdwG51mmI1lNsX2',
+      email: 'mainTest2@test.com',
+      handle: 'mainTest2',
+      createAt: '2019-11-24T14:53:32.014Z',
       imageUrl: 'image/dsfsdkfghskdfgs/dgfdhfgdh',
       bio: 'Hello, my name is user, nice to meet you',
       website: 'https://user.com',
@@ -13,34 +13,42 @@ let db = {
   ],
   screams: [
     {
-      userHandle: 'user',
-      body: 'This is a sample scream',
-      createdAt: '2019-03-15T10:59:52.798Z',
+      userHandle: 'mainTest2',
+      body: 'Scream',
+      createAt: '2019-11-24T14:53:32.014Z',
       likeCount: 5,
       commentCount: 3
+    }
+  ],
+  comments: [
+    {
+      userHandle: 'mainTest2',
+      screamId: 'othkTLz6aOGcRAJ0b10q',
+      body: 'Scream',
+      createAt: '2019-11-06T18:51:43.840Z'
+    }
+  ],
+  notifications: [
+    {
+      recipient: 'mainTest2',
+      sender: 'john',
+      read: 'true | false',
+      screamId: 'othkTLz6aOGcRAJ0b10q',
+      type: 'like | comment',
+      createAt: '2019-11-06T18:51:43.840Z'
     }
   ]
 };
 const userDetails = {
   // Redux data
   credentials: {
-    userId: 'N43KJ5H43KJHREW4J5H3JWMERHB',
-    email: 'user@email.com',
-    handle: 'user',
-    createdAt: '2019-03-15T10:59:52.798Z',
+    userId: 'E5mjsn8TmdgVRNdwG51mmI1lNsX2',
+    email: 'mainTest2@test.com',
+    handle: 'mainTest2',
+    createAt: '2019-11-24T14:53:32.014Z',
     imageUrl: 'image/dsfsdkfghskdfgs/dgfdhfgdh',
     bio: 'Hello, my name is user, nice to meet you',
     website: 'https://user.com',
     location: 'Lonodn, UK'
-  },
-  likes: [
-    {
-      userHandle: 'user',
-      screamId: 'hh7O5oWfWucVzGbHH2pa'
-    },
-    {
-      userHandle: 'user',
-      screamId: '3IOnFoQexRcofs5OhBXO'
-    }
-  ]
+  }
 };
