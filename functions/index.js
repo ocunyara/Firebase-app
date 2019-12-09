@@ -5,7 +5,7 @@ const FBAuth = require('./util/fbAuth');
 const db = require('./util/admin');
 
 const { getAllScreams, postOneScream, getScream, commentOnScream, likeScream, unlikeScream, deleteScream } = require('./handles/screams');
-const { signup, login, uploadImage, addUserDetails, getAuthenticatedUser} = require('./handles/users');
+const { signup, login, uploadImage, addUserDetails, getAuthenticatedUser, getUserDetails, markNotificationsRead} = require('./handles/users');
 
 // Screams routes
 app.get('/screams', getAllScreams);
@@ -22,6 +22,8 @@ app.post('/login', login);
 app.post('/user/image', FBAuth, uploadImage);
 app.post('/user', FBAuth, addUserDetails);
 app.post('/user', FBAuth, getAuthenticatedUser);
+app.post('/user/:handle', getUserDetails);
+app.post('/notifications', FBAuth, markNotificationsRead);
 
 
 exports.api = functions.region('europe-west1').https.onRequest(app);
@@ -81,7 +83,7 @@ exports.deleteNotificationOnLikes = functions
     db.doc(`/notifications/${snapshot.id}`)
       .delete()
       .then(() => {
-        return
+        return;
       })
       .catch((err) => {
         console.error(err);
