@@ -12,10 +12,11 @@ exports.getAllScreams = (req, res) => {
           screamId: doc.id,
           body: doc.data().body,
           userHandle: doc.data().userHandle,
-          createAt: doc.data().createAt.body,
+          createAt: doc.data().createAt.toDate(),
           commentCount: doc.data().commentCount,
           likeCount: doc.data().likeCount,
-          userImage: doc.data().userImage
+          userImage: doc.data().userImage,
+          screamImg: doc.data().screamImg
         });
       });
       return res.json(screams);
@@ -36,6 +37,7 @@ exports.postOneScream = (req, res) => {
     body: req.body.body,
     userHandle: req.user.handle,
     userImage: req.user.imageUrl,
+    screamImg: req.user.screamImg,
     createAt: new Date().toISOString(),
     likeCount: 0,
     commentCount: 0
