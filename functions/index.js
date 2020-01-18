@@ -10,11 +10,11 @@ const { signup, login, uploadImage, addUserDetails, getAuthenticatedUser, getUse
 // Screams routes
 app.get('/screams', getAllScreams);
 app.post('/scream', FBAuth, postOneScream);
-app.get('/screams/:screamId', getScream);
-app.get('/screams/:screamId/like', FBAuth, likeScream);
-app.get('/screams/:screamId/unlike', FBAuth, unlikeScream);
-app.get('/screams/"screamId/comment', FBAuth, commentOnScream);
-app.delete('/screams/:screamId', FBAuth, deleteScream);
+app.get('/scream/:screamId', getScream);
+app.get('/scream/:screamId/like', FBAuth, likeScream);
+app.get('/scream/:screamId/unlike', FBAuth, unlikeScream);
+app.get('/scream/"screamId/comment', FBAuth, commentOnScream);
+app.delete('/scream/:screamId', FBAuth, deleteScream);
 
 //  Users route
 app.post('/signup', signup);
