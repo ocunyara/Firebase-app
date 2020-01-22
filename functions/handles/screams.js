@@ -12,6 +12,7 @@ exports.getAllScreams = (req, res) => {
           body: doc.data().body,
           userHandle: doc.data().userHandle,
           createAt: doc.data().createAt,
+          screamImg: doc.data().screamImg,
           commentCount: doc.data().commentCount,
           likeCount: doc.data().likeCount,
           userImage: doc.data().userImage
@@ -29,9 +30,13 @@ exports.postOneScream = (req, res) => {
   if (req.body.body.trim() === '') {
     return res.status(400).json({ body: 'Body must not be empty' });
   }
+  if (req.body.screamImg.trim() === '') {
+    return res.status(400).json({ body: 'Please add post image' });
+  }
 
   const newScream = {
     body: req.body.body,
+    screamImg: req.body.screamImg,
     userHandle: req.user.handle,
     userImage: req.user.imageUrl,
     createAt: new Date().toISOString(),
